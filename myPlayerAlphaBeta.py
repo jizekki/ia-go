@@ -23,7 +23,7 @@ class myPlayer(PlayerInterface):
         self._board = Goban.Board()
         self._mycolor = None
         self._turn = 0
-        self._depth = 2
+        self._depth = 3
 
     def getPlayerName(self):
         return "Random Player"
@@ -38,7 +38,12 @@ class myPlayer(PlayerInterface):
         move = AlBe.AlphaBetaCoup(self._board, self._depth, self._turn)[0]
         self._board.push(move)
         # The end of the partie that needs to be changed
-
+        legal_length = len(self._board.generate_legal_moves()) - 1
+        if(legal_length < 11):  # and legal_length >= 11):
+            self._depth = 3
+            print("//////////// Changement 1 ////////////\n\n")
+        else:
+            self._depth = 2
         # New here: allows to consider internal representations of moves
         print("I am playing ", self._board.move_to_str(move))
         print("My current board :")

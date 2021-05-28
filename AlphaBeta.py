@@ -18,24 +18,30 @@ class AlphaBeta():
         self._nodes = 0
         for m in b.generate_legal_moves():
             # éviter les bordures prendant premiers tours du jeu.
-            if (turn < 7):
+            if (turn < 15):
                 x, y = b.unflatten(m)
-                if (x < 2 or y < 2 or x >= b._BOARDSIZE-2 or y >= b._BOARDSIZE-2):
-                    continue
-            elif (turn < 15):
-                x, y = b.unflatten(m)
-                if (x < 1 or y < 1 or x >= b._BOARDSIZE-1 or y >= b._BOARDSIZE-1):
-                    continue
+                if (not (x < 1 or y < 1 or x >= b._BOARDSIZE-1 or y >= b._BOARDSIZE-1)):
+                    b.push(m)
 
-            b.push(m)
+                    ret = self.AlphaBeta(
+                        b, depth - 1, -self._maxscore, self._maxscore)
 
-            ret = self.AlphaBeta(b, depth - 1, -self._maxscore, self._maxscore)
+                    if v is None or ret > v:
+                        coup = m
+                        v = ret
+                    b.pop()
+                    self._nodes += 1
+            else:
+                b.push(m)
 
-            if v is None or ret > v:
-                coup = m
-                v = ret
-            b.pop()
-            self._nodes += 1
+                ret = self.AlphaBeta(
+                    b, depth - 1, -self._maxscore, self._maxscore)
+
+                if v is None or ret > v:
+                    coup = m
+                    v = ret
+                b.pop()
+                self._nodes += 1
         return (coup, v)
 
     def AlphaBeta(self, b, depth, alpha, beta):
