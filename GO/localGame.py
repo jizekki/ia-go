@@ -16,8 +16,8 @@ player1 = myPlayerAlphaBeta2.myPlayer()
 player1.newGame(Goban.Board._BLACK)
 players.append(player1)
 
-#player2 = myPlayer.myPlayer()
-player2 = myPlayerAlphaBeta.myPlayer()
+player2 = myPlayer.myPlayer()
+#player2 = myPlayerAlphaBeta.myPlayer()
 player2.newGame(Goban.Board._WHITE)
 players.append(player2)
 

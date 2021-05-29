@@ -4,10 +4,10 @@ import eval
 class AlphaBeta():
 
     def __init__(self, color):
-        self._mycolor = color
-        self._nodes = 0
-        self._maxscore = 100000
-        self._eval = eval.Eval(color)
+        self.maCouleur = color
+        self.noeuds = 0
+        self.scoremax = 100000
+        self.evaluation = eval.Eval(color)
 
     def AlphaBetaCoup(self, b, depth, turn):
         """ Premier niveau de Minmax avec Alpha Beta """
@@ -15,7 +15,7 @@ class AlphaBeta():
             return None
 
         v, coup = None, None
-        self._nodes = 0
+        self.noeuds = 0
         for m in b.generate_legal_moves():
             # éviter les bordures prendant premiers tours du jeu.
             if (turn < 15):
@@ -24,43 +24,43 @@ class AlphaBeta():
                     b.push(m)
 
                     ret = self.AlphaBeta(
-                        b, depth - 1, -self._maxscore, self._maxscore)
+                        b, depth - 1, -self.scoremax, self.scoremax)
 
                     if v is None or ret > v:
                         coup = m
                         v = ret
                     b.pop()
-                    self._nodes += 1
+                    self.noeuds += 1
             else:
                 b.push(m)
 
                 ret = self.AlphaBeta(
-                    b, depth - 1, -self._maxscore, self._maxscore)
+                    b, depth - 1, -self.scoremax, self.scoremax)
 
                 if v is None or ret > v:
                     coup = m
                     v = ret
                 b.pop()
-                self._nodes += 1
+                self.noeuds += 1
         return (coup, v)
 
     def AlphaBeta(self, b, depth, alpha, beta):
-        self._nodes += 1
+        self.noeuds += 1
 
         """ MinMax avec Alpha beta pruning"""
         if b.is_game_over():
             res = b.result()
             if res == "1-0":
-                r = - ((-1)**self._mycolor) * self._maxscore
+                r = - ((-1)**self.maCouleur) * self.scoremax
             elif res == "0-1":
-                r = ((-1)**self._mycolor) * self._maxscore
+                r = ((-1)**self.maCouleur) * self.scoremax
             else:
                 r = 0
             return r
 
         if depth == 0:
-            self._eval = eval.Eval(self._mycolor)
-            e = self._eval.evaluate(b)
+            self.evaluation = eval.Eval(self.maCouleur)
+            e = self.evaluation.evaluate(b)
             return e
 
         v = None
@@ -79,21 +79,21 @@ class AlphaBeta():
         return beta
 
     def BetaAlpha(self, b, depth, alpha, beta):
-        self._nodes += 1
+        self.noeuds += 1
         """ MaxMin avec Alpha beta pruning"""
         if b.is_game_over():
-            res = b.result()
-            if res == "1-0":
-                r = - ((-1)**self._mycolor) * self._maxscore
-            elif res == "0-1":
-                r = ((-1)**self._mycolor) * self._maxscore
+            resultat = b.result()
+            if resultat == "1-0":
+                r = - ((-1)**self.maCouleur) * self.scoremax
+            elif resultat == "0-1":
+                r = ((-1)**self.maCouleur) * self.scoremax
             else:
                 r = 0
             return r
 
         if depth == 0:
-            self._eval = eval.Eval(self._mycolor)
-            e = self._eval.evaluate(b)
+            self.evaluation = eval.Eval(self.maCouleur)
+            e = self.evaluation.evaluate(b)
             return e
 
         v = None
