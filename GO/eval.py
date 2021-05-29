@@ -191,8 +191,8 @@ class Eval():
         score += 8*goal4
 
         # maximiser le nombre des pions connectés
-        #goal5 = self.stoneConnection(b)
-        #score += goal5
+        goal5 = self.stoneConnection(b)
+        score += goal5
 
         # maximiser le nombre des pions connectés et des cercles crées
         goal6 = self.EulerNumber(b)

@@ -1,6 +1,7 @@
 ''''''
 import Goban
 import myPlayer
+import myPlayerAlphaBeta2
 import myPlayerAlphaBeta
 import gnugoPlayer
 import time
@@ -11,12 +12,12 @@ b = Goban.Board()
 
 players = []
 #player1 = myPlayer.myPlayer()
-player1 = myPlayerAlphaBeta.myPlayer()
+player1 = myPlayerAlphaBeta2.myPlayer()
 player1.newGame(Goban.Board._BLACK)
 players.append(player1)
 
 #player2 = myPlayer.myPlayer()
-player2 = gnugoPlayer.myPlayer()
+player2 = myPlayerAlphaBeta.myPlayer()
 player2.newGame(Goban.Board._WHITE)
 players.append(player2)
 
